@@ -10,7 +10,7 @@ import {
   Button
 } from '@chakra-ui/react'
 
-const HookForm = () => {
+const Contact = () => {
   const {
     register,
     formState: { errors, isSubmitting }
@@ -94,5 +94,5 @@ const HookForm = () => {
   )
 }
 
-export default HookForm
+export default Contact
 export { getServerSideProps } from '../components/chakra'
