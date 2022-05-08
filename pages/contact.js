@@ -44,7 +44,7 @@ const Contact = () => {
         </Heading>
 
         <Section delay={0.1}>
-          <NetlifyFormProvider {...netlfy}>
+          <NetlifyFormProvider {...netlify}>
             <NetlifyFormComponent onSubmit={handleSubmit(onSubmit)}>
               <Honeypot />
               {netlify.success && (
