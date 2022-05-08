@@ -90,13 +90,6 @@ const Home = () => (
           empresas são aquelas que são feitas com as reais necessidades do
           cliente em mente.
         </Paragraph>
-        <Box align="center" my={4}>
-          <NextLink href="/contact" scroll={false} passHref>
-            <Button rightIcon={<ChevronRightIcon />} colorScheme="teal">
-              Entre em contato
-            </Button>
-          </NextLink>
-        </Box>
       </Section>
 
       <Section delay={0.2}>
