@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Container, Heading } from '@chakra-ui/react'
 import Layout from '../components/layouts/article'
 import Section from '../components/section'
