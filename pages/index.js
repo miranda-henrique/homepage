@@ -1,25 +1,25 @@
 import NextLink from 'next/link'
 import {
-  Link,
   Container,
   Heading,
   Box,
-  SimpleGrid,
   Button,
-  List,
-  ListItem,
+  SimpleGrid,
   useColorModeValue,
   chakra
 } from '@chakra-ui/react'
-import { ChevronRightIcon } from '@chakra-ui/icons'
 import Paragraph from '../components/paragraph'
-import { BioSection, BioYear } from '../components/bio'
+import { StackSection, StackTitle, StackContent } from '../components/bio'
+import { ChevronRightIcon } from '@chakra-ui/icons'
 import Layout from '../components/layouts/article'
 import Section from '../components/section'
 import { GridItem } from '../components/grid-item'
-import { IoLogoTwitter, IoLogoInstagram, IoLogoGithub } from 'react-icons/io5'
-import thumbYouTube from '../public/images/links/youtube.png'
-import thumbInkdrop from '../public/images/works/inkdrop_eyecatch.png'
+import thumbMern from '../public/images/works/mern.jpeg'
+import thumbNextTs from '../public/images/works/nextTs.png'
+import thumbNodeTsEx from '../public/images/works/nodeTsEx.png'
+import thumbReactTs from '../public/images/works/reactTs.png'
+import thumbFi from '../public/images/works/fi.png'
+import thumbFiBlog from '../public/images/works/fi-blog.png'
 import Image from 'next/image'
 
 const ProfileImage = chakra(Image, {
@@ -36,16 +36,16 @@ const Home = () => (
         textAlign="center"
         bg={useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')}
         css={{ backdropFilter: 'blur(10px)' }}
-      >
-        Hello, I&apos;m a full-stack developer based in Japan!
-      </Box>
+      ></Box>
 
       <Box display={{ md: 'flex' }}>
         <Box flexGrow={1}>
           <Heading as="h2" variant="page-title">
-            Takuya Matsuyama
+            Henrique Miranda
           </Heading>
-          <p>Digital Craftsman ( Artist / Developer / Designer )</p>
+          <p>
+            Software Developer <br />( Javascript | Typescript | React | Node )
+          </p>
         </Box>
         <Box
           flexShrink={0}
@@ -64,7 +64,7 @@ const Home = () => (
             overflow="hidden"
           >
             <ProfileImage
-              src="/images/takuya.jpg"
+              src="/images/henrique.jpg"
               alt="Profile image"
               borderRadius="full"
               width="100%"
@@ -76,24 +76,24 @@ const Home = () => (
 
       <Section delay={0.1}>
         <Heading as="h3" variant="section-title">
-          Work
+          Sobre mim
         </Heading>
         <Paragraph>
-          Takuya is a freelance and a full-stack developer based in Osaka with a
-          passion for building digital services/stuff he wants. He has a knack
-          for all things launching products, from planning and designing all the
-          way to solving real-life problems with code. When not online, he loves
-          hanging out with his camera. Currently, he is living off of his own
-          product called{' '}
-          <NextLink href="/works/inkdrop" scroll={false}>
-            <Link>Inkdrop</Link>
-          </NextLink>
-          .
+          Com anos de experiência no setor financeiro, busco, agora, unir o
+          conhecimento obtido ao longo desse período com a tecnologia,
+          oferecendo aos clientes soluções que não apenas buscam a melhor
+          performance possível, mas, também, levam em consideração os aspectos
+          que são singulares a cada empresa.
+        </Paragraph>
+        <Paragraph>
+          Acredito que as soluções tecnológicas que mais agregam valor para as
+          empresas são aquelas que são feitas com as reais necessidades do
+          cliente em mente.
         </Paragraph>
         <Box align="center" my={4}>
-          <NextLink href="/works" scroll={false}>
+          <NextLink href="/contact" scroll={false}>
             <Button rightIcon={<ChevronRightIcon />} colorScheme="teal">
-              My portfolio
+              Entre em contato
             </Button>
           </NextLink>
         </Box>
@@ -101,120 +101,92 @@ const Home = () => (
 
       <Section delay={0.2}>
         <Heading as="h3" variant="section-title">
-          Bio
+          Habilidades
         </Heading>
-        <BioSection>
-          <BioYear>1984</BioYear>
-          Born in Osaka (大阪), Japan.
-        </BioSection>
-        <BioSection>
-          <BioYear>2010</BioYear>
-          Completed the Master&apos;s Program in the Graduate School of
-          Information Science at Nara Institute of Science and Technology
-          (奈良先端科学技術大学院大学情報科学研究科修士課程)
-        </BioSection>
-        <BioSection>
-          <BioYear>2010</BioYear>
-          Worked at Yahoo! Japan (ヤフー株式会社入社)
-        </BioSection>
-        <BioSection>
-          <BioYear>2012 to present</BioYear>
-          Works as a freelance
-        </BioSection>
+        <StackSection>
+          <StackTitle>Linguagens</StackTitle>
+          <StackContent>Javascript | Typescript | Java</StackContent>
+        </StackSection>
+        <StackSection align="right">
+          <StackTitle>Frameworks | Bibliotecas</StackTitle>
+          <StackContent>ReactJs | NextJs | Node/Express</StackContent>
+          <StackContent>AdonisJs | Spring</StackContent>
+        </StackSection>
+        <StackSection>
+          <StackTitle>Bancos de dados | ORM | ODM</StackTitle>
+          <StackContent>PostgreSQL | MongoDB | LucidORM</StackContent>
+          <StackContent>Mongoose | Hibernate</StackContent>
+        </StackSection>
+        <StackSection align="right">
+          <StackTitle>Outros | Em desenvolvimento</StackTitle>
+          <StackContent>Docker | CI/CD com Heroku e AWS</StackContent>
+          <StackContent>NestJs | Jest</StackContent>
+        </StackSection>
       </Section>
 
-      <Section delay={0.3}>
+      <Section delay={0.2}>
         <Heading as="h3" variant="section-title">
-          I ♥
+          Projetos
         </Heading>
-        <Paragraph>
-          Art, Music,{' '}
-          <Link href="https://illust.odoruinu.net/" target="_blank">
-            Drawing
-          </Link>
-          , Playing Drums,{' '}
-          <Link href="https://500px.com/p/craftzdog" target="_blank">
-            Photography
-          </Link>
-          , Leica, Machine Learning
-        </Paragraph>
-      </Section>
-
-      <Section delay={0.3}>
-        <Heading as="h3" variant="section-title">
-          On the web
-        </Heading>
-        <List>
-          <ListItem>
-            <Link href="https://github.com/craftzdog" target="_blank">
-              <Button
-                variant="ghost"
-                colorScheme="teal"
-                leftIcon={<IoLogoGithub />}
-              >
-                @craftzdog
-              </Button>
-            </Link>
-          </ListItem>
-          <ListItem>
-            <Link href="https://twitter.com/inkdrop_app" target="_blank">
-              <Button
-                variant="ghost"
-                colorScheme="teal"
-                leftIcon={<IoLogoTwitter />}
-              >
-                @inkdrop_app (English)
-              </Button>
-            </Link>
-          </ListItem>
-          <ListItem>
-            <Link href="https://twitter.com/craftzdog" target="_blank">
-              <Button
-                variant="ghost"
-                colorScheme="teal"
-                leftIcon={<IoLogoTwitter />}
-              >
-                @craftzdog (日本語)
-              </Button>
-            </Link>
-          </ListItem>
-          <ListItem>
-            <Link href="https://instagram.com/craftzdog" target="_blank">
-              <Button
-                variant="ghost"
-                colorScheme="teal"
-                leftIcon={<IoLogoInstagram />}
-              >
-                @craftzdog
-              </Button>
-            </Link>
-          </ListItem>
-        </List>
-
         <SimpleGrid columns={[1, 2, 2]} gap={6}>
           <GridItem
-            href="https://www.youtube.com/devaslife"
-            title="Dev as Life"
-            thumbnail={thumbYouTube}
+            href="https://mern-ecommerce-project-app.herokuapp.com/"
+            id="mernEcommerce"
+            title="MERN Ecommerce"
+            thumbnail={thumbMern}
           >
-            My YouTube channel
+            Ecommerce construído utilizando React, Node/Express e MongoDB.
+            Inclui autenticação/autorização e pagamento via PayPal.
           </GridItem>
           <GridItem
-            href="https://www.inkdrop.app/"
-            title="Inkdrop"
-            thumbnail={thumbInkdrop}
+            href="https://product-catalog-nextjs-typescript.netlify.app/"
+            id="productCatalog"
+            title="Catálogo de Produtos"
+            thumbnail={thumbNextTs}
           >
-            A Markdown note-taking app
+            Display virtual que permite a listagem de produtos por cards e traz
+            páginas individuais para cada um. Backend feito em Spring.
+          </GridItem>
+          <GridItem
+            href="https://url-shortener-dio.herokuapp.com/"
+            id="urlShortener"
+            title="Encurtador de URL"
+            thumbnail={thumbNodeTsEx}
+          >
+            API para encurtar URLs feita com Node/Express e MongoDB. Permite que
+            o usuário escolha entre uma URL curta personalizada ou um hash
+            gerado aleatoriamente.
+          </GridItem>
+          <GridItem
+            href="https://mern-ecommerce-project-app.herokuapp.com/"
+            id="mernEcommerce"
+            title="MERN Ecommerce"
+            thumbnail={thumbReactTs}
+          >
+            Ecommerce construído utilizando React, Node/Express e MongoDB.
+            Inclui autenticação/autorização e pagamento via PayPal.
+          </GridItem>
+          <GridItem
+            href="https://futureinvest.blog.br/"
+            id="blog"
+            title="Blog"
+            thumbnail={thumbFiBlog}
+          >
+            Blog 100% responsivo. Para garantir uma melhor experiência de edição
+            de conteúdo para o cliente, o blog foi construído em Wordpress.
+            Classificação &quot;A&quot; pelo GTMetrix.
+          </GridItem>
+          <GridItem
+            href="https://www.futureinvest.com.br/"
+            id="landingPage"
+            title="Landing Page"
+            thumbnail={thumbFi}
+          >
+            Landing page em formatos desktop e mobile que utiliza as melhores
+            práticas para melhor velocidade de carregamento da página.
+            Classificação &quot;A&quot; pelo GTMetrix.
           </GridItem>
         </SimpleGrid>
-
-        <Box align="center" my={4}>
-          <NextLink href="/posts" scroll={false}>
-            <Button rightIcon={<ChevronRightIcon />} colorScheme="teal">
-              Popular posts
-            </Button>
-          </NextLink>
-        </Box>
       </Section>
     </Container>
   </Layout>

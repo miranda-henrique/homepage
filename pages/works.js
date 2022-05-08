@@ -12,36 +12,44 @@ import thumbStyly from '../public/images/works/styly_eyecatch.png'
 import thumbPichu2 from '../public/images/works/pichu2_eyecatch.png'
 import thumbFreeDBTagger from '../public/images/works/freedbtagger_eyecatch.png'
 import thumbAmembo from '../public/images/works/amembo_eyecatch.png'
+import thumbMern from '../public/images/works/mern.jpeg'
+import thumbNextTs from '../public/images/works/nextTs.png'
+import thumbNodeTsEx from '../public/images/works/nodeTsEx.png'
 
 const Works = () => (
   <Layout title="Works">
     <Container>
       <Heading as="h3" fontSize={20} mb={4}>
-        Works
+        Projetos
       </Heading>
 
       <SimpleGrid columns={[1, 1, 2]} gap={6}>
         <Section>
-          <WorkGridItem id="inkdrop" title="Inkdrop" thumbnail={thumbInkdrop}>
-            A Markdown note-taking app with 100+ plugins, cross-platform and
-            encrypted data sync support
+          <WorkGridItem
+            id="mernEcommerce"
+            title="MERN Ecommerce"
+            thumbnail={thumbMern}
+          >
+            Ecommerce construído utilizando React, Node/Express e MongoDB.
+            Inclui autenticação/autorização e pagamento via PayPal.
           </WorkGridItem>
         </Section>
         <Section>
           <WorkGridItem
-            id="walknote"
-            title="walknote"
-            thumbnail={thumbWalknote}
+            id="productCatalog"
+            title="Catálogo de Produtos"
+            thumbnail={thumbNextTs}
           >
-            Music recommendation app for iOS
+            Display virtual que permite a listagem de produtos por cards e traz
+            páginas individuais para cada um. Backend feito em Spring.
           </WorkGridItem>
         </Section>
 
         <Section delay={0.1}>
           <WorkGridItem
-            id="fourpainters"
-            title="The four painters"
-            thumbnail={thumbFourPainters}
+            id="urlShortener"
+            title="Encurtador de URL"
+            thumbnail={thumbNodeTsEx}
           >
             A video work generated with deep learning, imitating famous four
             painters like Van Gogh

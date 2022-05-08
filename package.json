@@ -1,7 +1,7 @@
 {
-  "name": "craftzdog-homepage",
+  "name": "miranda-homepage",
   "version": "1.0.0",
-  "description": "Takuya's website",
+  "description": "My Portfolio",
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
     "build": "next build",
@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "keywords": [],
-  "author": "Takuya Matsuyama",
+  "author": "Henrique Miranda",
   "license": "MIT",
   "dependencies": {
     "@chakra-ui/icons": "^1.1.7",
@@ -21,7 +21,9 @@
     "next": "^12.1.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.30.0",
     "react-icons": "^4.3.1",
+    "react-router-hash-link": "^2.4.3",
     "three": "^0.139.2"
   },
   "devDependencies": {
