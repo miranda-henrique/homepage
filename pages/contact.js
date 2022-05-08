@@ -25,7 +25,7 @@ const Contact = () => {
           </Heading>
 
           <Section delay={0.1}>
-            <form netlify>
+            <form name="contact" netlify>
               <FormControl isInvalid={errors.name}>
                 <FormLabel htmlFor="name">Nome</FormLabel>
                 <Input
