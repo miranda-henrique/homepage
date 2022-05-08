@@ -10,50 +10,22 @@ import {
   Button
 } from '@chakra-ui/react'
 
-function encode(data) {
-  return Object.keys(data)
-    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
-    .join('&')
-}
-
 const HookForm = () => {
   const {
-    handleSubmit,
     register,
     formState: { errors, isSubmitting }
   } = useForm()
 
-  const onSubmit = (data, e) => {
-    e.preventDefault()
-    const form = e.target
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encode({
-        'form-name': 'react-validation-form',
-        ...data
-      })
-    })
-      .then(response => {
-        reset()
-        navigate(form.getAttribute('action'))
-        console.log(response)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }
-
   return (
     <>
-      <Layout title="Posts">
+      <Layout title="Contato">
         <Container minH="100vh">
           <Heading as="h3" fontSize={30} mb={4} mt={100}>
             Contato
           </Heading>
 
           <Section delay={0.1}>
-            <form onSubmit={handleSubmit(onSubmit)} netlify>
+            <form netlify>
               <FormControl isInvalid={errors.name}>
                 <FormLabel htmlFor="name">Nome</FormLabel>
                 <Input
