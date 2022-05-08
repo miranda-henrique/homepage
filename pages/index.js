@@ -91,7 +91,7 @@ const Home = () => (
           cliente em mente.
         </Paragraph>
         <Box align="center" my={4}>
-          <NextLink href="/contact" scroll={false}>
+          <NextLink href="/contact" scroll={false} passHref>
             <Button rightIcon={<ChevronRightIcon />} colorScheme="teal">
               Entre em contato
             </Button>
