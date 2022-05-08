@@ -53,7 +53,7 @@ const HookForm = () => {
           </Heading>
 
           <Section delay={0.1}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} netlify>
               <FormControl isInvalid={errors.name}>
                 <FormLabel htmlFor="name">Nome</FormLabel>
                 <Input
