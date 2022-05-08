@@ -132,7 +132,7 @@ const Home = () => (
           <GridItem
             href="https://mern-ecommerce-project-app.herokuapp.com/"
             id="mernEcommerce"
-            title="MERN Ecommerce"
+            title="Ecommerce"
             thumbnail={thumbMern}
           >
             Ecommerce construído utilizando React, Node/Express e MongoDB.
@@ -158,13 +158,13 @@ const Home = () => (
             gerado aleatoriamente.
           </GridItem>
           <GridItem
-            href="https://mern-ecommerce-project-app.herokuapp.com/"
-            id="mernEcommerce"
-            title="MERN Ecommerce"
+            href="https://miranda-dashboard-in-react-and-typescript.netlify.app/"
+            id="reactDashboard"
+            title="Dashboard"
             thumbnail={thumbReactTs}
           >
-            Ecommerce construído utilizando React, Node/Express e MongoDB.
-            Inclui autenticação/autorização e pagamento via PayPal.
+            Dashboard feito em React e Typescript, buscando dados em um backend
+            feito em Spring.
           </GridItem>
           <GridItem
             href="https://futureinvest.blog.br/"
