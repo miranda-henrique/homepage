@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import NextLink from 'next/link'
 import {
   Container,
