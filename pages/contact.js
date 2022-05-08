@@ -10,22 +10,53 @@ import {
   Button
 } from '@chakra-ui/react'
 
+import {
+  useNetlifyForm,
+  NetlifyFormProvider,
+  NetlifyFormComponent,
+  Honeypot
+} from 'react-netlify-forms'
+
 const Contact = () => {
   const {
+    handleSubmit,
     register,
     formState: { errors, isSubmitting }
   } = useForm()
 
-  return (
-    <>
-      <Layout title="Contato">
-        <Container minH="100vh">
-          <Heading as="h3" fontSize={30} mb={4} mt={100}>
-            Contato
-          </Heading>
+  const netlify = useNetlifyForm({
+    name: 'react-hook-form',
+    action: '/thanks',
+    honeypotName: 'bot-field',
+    onSuccess: (response, context) => {
+      console.log('Successfully sent form data to Netlify Server')
+    }
+  })
 
-          <Section delay={0.1}>
-            <form name="contact" netlify>
+  const onSubmit = data => netlify.handleSubmit(null, data)
+
+  return (
+    <Layout title="Contato">
+      <Container minH="100vh">
+        <Heading as="h3" fontSize={30} mb={4} mt={100}>
+          Contato
+        </Heading>
+
+        <Section delay={0.1}>
+          <NetlifyFormProvider {...netlfy}>
+            <NetlifyFormComponent onSubmit={handleSubmit(onSubmit)}>
+              <Honeypot />
+              {netlify.success && (
+                <p sx={{ variant: 'alerts.success', p: 3 }}>
+                  Obrigado! O contato será retornado em breve!
+                </p>
+              )}
+              {netlify.error && (
+                <p sx={{ variant: 'alerts.muted', p: 3 }}>
+                  Parece que houve um erro no envio. Poderia tentar novamente
+                  mais tarde?
+                </p>
+              )}
               <FormControl isInvalid={errors.name}>
                 <FormLabel htmlFor="name">Nome</FormLabel>
                 <Input
@@ -86,11 +117,11 @@ const Contact = () => {
               >
                 Enviar
               </Button>
-            </form>
-          </Section>
-        </Container>
-      </Layout>
-    </>
+            </NetlifyFormComponent>
+          </NetlifyFormProvider>
+        </Section>
+      </Container>
+    </Layout>
   )
 }
 
