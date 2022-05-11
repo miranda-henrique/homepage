@@ -1,40 +1,109 @@
-/* eslint-disable no-unused-vars */
-import { Container, Heading } from '@chakra-ui/react'
+import {
+  Container,
+  Heading,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  VStack,
+  FormErrorMessage,
+  createStandaloneToast
+} from '@chakra-ui/react'
 import Layout from '../components/layouts/article'
 import Section from '../components/section'
-import { useForm } from 'react-hook-form'
-import {
-  FormErrorMessage,
-  FormLabel,
-  FormControl,
-  Input,
-  Button
-} from '@chakra-ui/react'
+import { useFormik } from 'formik'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
-import {
-  useNetlifyForm,
-  NetlifyFormProvider,
-  NetlifyFormComponent,
-  Honeypot
-} from 'react-netlify-forms'
+const phonePattern =
+  /^\s*(\d{2}|\d{0})[-. ]?(\d{5}|\d{4})[-. ]?(\d{4})[-. ]?\s*$/
 
-const Contact = () => {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors, isSubmitting }
-  } = useForm()
+const emailPattern =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-  const netlify = useNetlifyForm({
-    name: 'react-hook-form',
-    action: '/thanks',
-    honeypotName: 'bot-field',
-    onSuccess: (response, context) => {
-      console.log('Successfully sent form data to Netlify Server')
+export default function Contact() {
+  const [nameError, setNameError] = useState('')
+  const [phoneError, setPhoneError] = useState('')
+  const [emailError, setEmailError] = useState('')
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      phone: '',
+      email: ''
+    },
+    validate: values => {
+      const error = {}
+      const noNameMessage = 'Insira seu nome'
+      const noEmailMessage = 'Insira um email para contato'
+      const invalidEmailMessage = 'Insira um email válido'
+      const noPhoneMessage = 'Insira um telefone para contato'
+      const invalidPhoneMessage = 'Insira um telefone válido'
+      if (!values.name) error.name = noNameMessage
+      if (!values.phone) error.phone = noPhoneMessage
+      if (!values?.phone.match(phonePattern)) error.phone = invalidPhoneMessage
+      if (!values.email) error.email = noEmailMessage
+      if (!values?.email.match(emailPattern)) error.email = invalidEmailMessage
+      if (!values.email && !values?.email.match(emailPattern))
+        error.email = 'Insira um email válido para contato'
+      return error
+    },
+    onSubmit: async values => {
+      let config = {
+        method: 'post',
+        url: '/api/contact',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: values
+      }
+
+      try {
+        const response = await axios(config)
+        if (response.status === 200) {
+          const toast = createStandaloneToast()
+
+          toast({
+            title: 'Mensagem enviada!',
+            description: 'Obrigado! Logo retornarei o contato.',
+            status: 'success',
+            duration: 9000,
+            isClosable: true
+          })
+          formik.values.name = ''
+          formik.values.phone = ''
+          formik.values.email = ''
+          console.log('Success')
+        }
+      } catch (error) {
+        const toast = createStandaloneToast()
+
+        toast({
+          title: 'Erro ao enviar a mensagem.',
+          description: 'Poderia tentar novamente mais tarde?',
+          status: 'error',
+          duration: 9000,
+          isClosable: true
+        })
+        console.error({ error })
+      }
     }
   })
 
-  const onSubmit = data => netlify.handleSubmit(null, data)
+  useEffect(() => {
+    if (formik.errors.name) {
+      setNameError(formik.errors.name)
+    }
+
+    if (formik.errors.phone) {
+      setPhoneError(formik.errors.phone)
+    }
+
+    if (formik.errors.email) {
+      setEmailError(formik.errors.email)
+    }
+  }, [formik])
 
   return (
     <Layout title="Contato">
@@ -44,87 +113,58 @@ const Contact = () => {
         </Heading>
 
         <Section delay={0.1}>
-          <NetlifyFormProvider {...netlify}>
-            <NetlifyFormComponent onSubmit={handleSubmit(onSubmit)}>
-              <Honeypot />
-              {netlify.success && (
-                <p sx={{ variant: 'alerts.success', p: 3 }}>
-                  Obrigado! O contato será retornado em breve!
-                </p>
-              )}
-              {netlify.error && (
-                <p sx={{ variant: 'alerts.muted', p: 3 }}>
-                  Parece que houve um erro no envio. Poderia tentar novamente
-                  mais tarde?
-                </p>
-              )}
-              <FormControl isInvalid={errors.name}>
-                <FormLabel htmlFor="name">Nome</FormLabel>
-                <Input
-                  id="name"
-                  placeholder="Nome"
-                  {...register('name', {
-                    required: 'É necessário informar seu nome',
-                    minLength: {
-                      value: 4,
-                      message: 'Minimum length should be 4'
-                    }
-                  })}
-                />
-                <FormErrorMessage>
-                  {errors.name && errors.name.message}
-                </FormErrorMessage>
-              </FormControl>
-              <FormControl isInvalid={errors.phone}>
-                <FormLabel htmlFor="phone">
-                  Telefone <strong>(apenas números)</strong>
-                </FormLabel>
-                <Input
-                  id="phone"
-                  placeholder="Insira seu número de WhatsApp ou de telefone"
-                  {...register('phone', {
-                    required: 'Por favor, insira um número para contato',
-                    pattern:
-                      /^\s*(\d{2}|\d{0})[-. ]?(\d{5}|\d{4})[-. ]?(\d{4})[-. ]?\s*$/
-                  })}
-                />
-                <FormErrorMessage>
-                  {errors.phone && errors.phone.message}
-                  {errors.phone?.type === 'pattern' &&
-                    'Insira um telefone válido'}
-                </FormErrorMessage>
-              </FormControl>
-              <FormControl isInvalid={errors.email}>
-                <FormLabel htmlFor="email">E-mail</FormLabel>
-                <Input
-                  id="email"
-                  placeholder="Seu melhor e-mail"
-                  {...register('email', {
-                    pattern:
-                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                  })}
-                />
-                <FormErrorMessage>
-                  {errors.email && errors.email.message}
-                  {errors.email?.type === 'pattern' &&
-                    'Insira um e-mail válido'}
-                </FormErrorMessage>
-              </FormControl>
-              <Button
-                mt={4}
-                colorScheme="teal"
-                isLoading={isSubmitting}
-                type="submit"
-              >
-                Enviar
-              </Button>
-            </NetlifyFormComponent>
-          </NetlifyFormProvider>
+          <Flex align="center" justify="center">
+            <form onSubmit={formik.handleSubmit}>
+              <VStack spacing={4} align="flex-start">
+                <FormControl isInvalid={formik.errors.name}>
+                  <FormLabel htmlFor="name">Nome</FormLabel>
+                  <Input
+                    id="name"
+                    name="name"
+                    placeholder="Insira seu nome"
+                    variant="filled"
+                    width={[300, 500]}
+                    onChange={formik.handleChange}
+                    value={formik.values.name}
+                  />
+                  <FormErrorMessage>{nameError}</FormErrorMessage>
+                </FormControl>
+                <FormControl isInvalid={formik.errors.phone}>
+                  <FormLabel htmlFor="phone">
+                    Telefone <strong>(apenas números)</strong>
+                  </FormLabel>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    placeholder="Insira um telefone para contato"
+                    variant="filled"
+                    width={[300, 500]}
+                    onChange={formik.handleChange}
+                    value={formik.values.phone}
+                  />
+                  <FormErrorMessage>{phoneError}</FormErrorMessage>
+                </FormControl>
+                <FormControl isInvalid={formik.errors.email}>
+                  <FormLabel htmlFor="email">E-mail</FormLabel>
+                  <Input
+                    id="email"
+                    name="email"
+                    placeholder="Insira seu email"
+                    variant="filled"
+                    width={[300, 500]}
+                    onChange={formik.handleChange}
+                    value={formik.values.email}
+                  />
+                  <FormErrorMessage>{emailError}</FormErrorMessage>
+                </FormControl>
+                <Button type="submit" colorScheme="teal" isFullWidth>
+                  Enviar
+                </Button>
+              </VStack>
+            </form>
+          </Flex>
         </Section>
       </Container>
     </Layout>
   )
 }
-
-export default Contact
-export { getServerSideProps } from '../components/chakra'
